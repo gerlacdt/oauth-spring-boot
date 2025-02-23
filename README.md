@@ -23,12 +23,13 @@ make
 
 # now you login via Browser and get a JWT token
 # http://localhost:9090/login
-# you will be redirected to Keycloak and after successful authenication you will be redcirected to the app homepage which contains a link to the JWT token
+# you will be redirected to Keycloak and after successful authentication
+# you will be redirected to the app homepage which contains a link to the JWT token
 
 # with the JWT token, you can make http requests
 TOKEN="<put your JWT token here>"
-curl -v -H "Authorization: Bearer $TOKEN" "http://localhost:9090/hello
-curl -v -H "Authorization: Bearer $TOKEN" "http://localhost:9090/greeting
+curl -v -H "Authorization: Bearer $TOKEN" "http://localhost:9090/hello"
+curl -v -H "Authorization: Bearer $TOKEN" "http://localhost:9090/greeting"
 
 # after work, you can kill the keycloak container
 make keycloak-stop
@@ -36,11 +37,11 @@ make keycloak-stop
 
 ### Export data from Keycloak container
 
-Keycloak as container start blank, i.e. no clients, no users no roles. In order
-to have to start a preconfigured Keycloak, one has to export the data and use
-the JSON files as import during startup. The following describes how to export
-"all" data. It's cumbersome and you have to do a _container dance_ since
-Keycloak does not offer a complete export at runtime.
+Keycloak starts normally empty, i.e. no clients, no users no roles. In order to
+have to start a preconfigured Keycloak, one has to export the data and use the
+JSON files as import during startup. The following describes how to export "all"
+data. you have to do a _container dance_ since Keycloak does not offer a
+complete export during runtime.
 
 Preconfigured users:
 
