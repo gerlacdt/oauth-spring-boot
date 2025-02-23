@@ -18,6 +18,8 @@ public class WebSecurityConfig {
                 authorize
                     .requestMatchers("/login", "/actuator/**")
                     .permitAll()
+                    .requestMatchers("/hello")
+                    .hasAuthority("SCOPE_profile")
                     .anyRequest()
                     .authenticated())
         .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))

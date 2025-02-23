@@ -38,9 +38,15 @@ public class MyRestController {
   public String hello(Authentication authentication) {
     JwtAuthenticationToken oauthToken = (JwtAuthenticationToken) authentication;
     String name = (String) oauthToken.getTokenAttributes().get("name");
+    logger.info("TOKEN_ATTRIBUTES");
     for (Map.Entry<?, ?> entry : oauthToken.getTokenAttributes().entrySet()) {
       logger.info("{} => {}", entry.getKey(), entry.getValue());
     }
+    logger.info("CLAIMS");
+    for (Map.Entry<?, ?> entry : oauthToken.getToken().getClaims().entrySet()) {
+      logger.info("{} => {}", entry.getKey(), entry.getValue());
+    }
+    logger.info("authorities: {}", oauthToken.getAuthorities());
     return String.format("hello %s", name);
   }
 
@@ -48,9 +54,15 @@ public class MyRestController {
   public String greeting(Authentication authentication) {
     JwtAuthenticationToken oauthToken = (JwtAuthenticationToken) authentication;
     String name = (String) oauthToken.getTokenAttributes().get("name");
+    logger.info("TOKEN_ATTRIBUTES");
     for (Map.Entry<?, ?> entry : oauthToken.getTokenAttributes().entrySet()) {
       logger.info("{} => {}", entry.getKey(), entry.getValue());
     }
+    logger.info("CLAIMS");
+    for (Map.Entry<?, ?> entry : oauthToken.getToken().getClaims().entrySet()) {
+      logger.info("{} => {}", entry.getKey(), entry.getValue());
+    }
+    logger.info("authorities: {}", oauthToken.getAuthorities());
     return String.format("greetings %s", name);
   }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,7 +28,14 @@ public class MyRestControllerTest {
 
   @Test
   public void testHello_authenticated_ok() throws Exception {
-    this.mvc.perform(get("/hello").with(jwt())).andExpect(status().isOk());
+    this.mvc
+        .perform(get("/hello").with(jwt().authorities(new SimpleGrantedAuthority("SCOPE_profile"))))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void testHello_wrongScope_ok() throws Exception {
+    this.mvc.perform(get("/hello").with(jwt())).andExpect(status().isForbidden());
   }
 
   @Test
