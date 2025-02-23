@@ -1,4 +1,6 @@
-# Export data from keycloak container
+# Development Instructions
+
+### Export data from keycloak container
 
 ```bash
 docker ps
@@ -13,4 +15,38 @@ docker run -it --rm --entrypoint sh debug/keycloak
 
 # don't stop container, use docker cp to copy the files on the local machine
 docker cp <container_id>:/tmp/myrealm-realm.json .
+```
+
+### Get direct token
+
+**Prerequisites**:
+
+- Keycloak is started
+- Spring-Boot app is running
+
+Getting a token directly from Keycloak is only possible because **Direct Access
+Grant** is enabled for our client. It should not be done in production, it's
+only for convenient development purpose.
+
+Get a token:
+
+```bash
+curl \
+  -d "client_id=myoidc-client" \
+  -d "client_secret=Z2OcY7TsYQIsQzGF37OpKb7cmhTsvyJ1" \
+  -d "username=foo" \
+  -d "password=foo" \
+  -d "grant_type=password" \
+  "http://localhost:8080/realms/myrealm/protocol/openid-connect/token"
+
+# or use:
+./scripts/get_token.sh
+```
+
+### Make a http call
+
+With the above in place, an authenticated call can be done via:
+
+```bash
+./scripts/call.sh
 ```
